@@ -1,13 +1,16 @@
 package com.example.chatapp.RVadapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.example.chatapp.Activity.Chat_Activity
 import com.example.chatapp.R
-import com.example.chatapp.User
+import com.example.chatapp.model.User
+import com.google.firebase.auth.FirebaseAuth
 
 class Adapter(
     val context:Context,
@@ -30,8 +33,15 @@ class Adapter(
     }
 
     override fun onBindViewHolder(holder: viewholder, position: Int) {
-      val currname=userlist[position].name.toString()
-        holder.viewtext.text=currname
+      val currname=userlist[position]
+        holder.viewtext.text=currname.name
+        holder.itemView.setOnClickListener {
+            val intent=Intent(context,Chat_Activity::class.java)
+
+            intent.putExtra("name",currname.name)
+            intent.putExtra("uid",currname.uid)
+            context.startActivity(intent)
+        }
     }
 }
 
